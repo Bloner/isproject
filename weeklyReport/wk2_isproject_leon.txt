@@ -35,7 +35,8 @@ Next Step Part of Last Week
 which is estimated to cost 1 - 3 weeks.                                      <- in progress 
 
 3. in the meaning, try to crawl related detailed information
-about each video, like the comments, etc.                                  <- in progress (check uInfo.csv in the workbench folder)
+about each video, like the comments, etc.                                  <- in progress (check vpContent.csv 
+in the workbench folder)
 
 ###############################################
 
@@ -49,7 +50,7 @@ Basic Description of Work
 Beside the work mentioned above:
 
 data related:
-1. 3000+ users' detailed information has been crawled down
+1. 3000+ users' detailed information has been crawled down (check uInfo.csv in the workbench folder)
 
 2. 800+ videos' information has been crawled down (check vpContent.csv 
 in the workbench folder)
