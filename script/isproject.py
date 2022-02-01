@@ -1,9 +1,31 @@
 from datetime import datetime
 import re
-import pandas as pd
+import csv
 import os
+import requests
 
-#convert string to number, like "2.3w" -> 23000 and "2.3亿" to 230000000
+def processdata():
+    csv_path = "C:/Users/Bonn/Desktop/1.csv"
+    with open(csv_path) as f:
+        reader = csv.reader(f)
+        n = 1
+        for each_row in reader:
+            each_row[1] = findurl(each_row[1])
+            print("Downloading the " + str(n) + "th video, link is "+ each_row[1] + "...")
+            download(each_row[1], each_row[0][-19:])
+            print("finished the " + str(n) + "th video")
+            n+=1
+    f.close()
+    #
+
+def download(url, name):
+    path = "C:/Users/Bonn/Desktop/videos/" + name + ".mp4"
+    r = requests.get("https:" + url)
+    with open(path, 'wb') as f:
+        f.write(r.content)
+        f.close
+
+# convert string to number, like "2.3w" -> 23000 and "2.3亿" to 230000000
 def strToNum(s):
     if s[-1] == "w":
         res= int(float(s[0:-1]) * 10000)
@@ -13,7 +35,8 @@ def strToNum(s):
         res = s
     return res
 
-#convert string to date, like "发布时间：2021-10-23 17:25" -> 2021-10-23 17:25
+
+# convert string to date, like "发布时间：2021-10-23 17:25" -> 2021-10-23 17:25
 def strToDate(s):
     s = s[5:]
     ls = re.split('-| |:',s)
@@ -21,12 +44,14 @@ def strToDate(s):
     return datetime(ls[0], ls[1], ls[2], ls[3], ls[4])
 
 
-#get the video url from the html context
-def findVideoSrc(src):
-    for eachString in src:
-        pass
+# get the video url from the html context
+def findurl(src):
+    rule = r'src=""(.*?)""'
+    res = re.findall(rule, src)
+    return res[-1]
 
-#rename file based on the order and settled name in a file
+
+# rename file based on the order and settled name in a file
 def renameFile():
     path = ""
     fileList = os.listdir(path).sort()
@@ -39,11 +64,12 @@ def renameFile():
         os.rename(oldName, newName)
         print(oldName, "----->", newName)
         n+=1
-if __name__ == "__main__":
-    print(strToDate("发布时间：2022-10-12 23:56"))
 
+
+if __name__ == "__main__":
+   processdata()
 '''
-path = r'C:\Users\Bonn\Desktop\videoInfoBasedOnKW'
+path = 'C:\\Users\\Bonn\\Desktop\\videoInfoBasedOnKW'
 #set working directory
 os.chdir(path)
 
