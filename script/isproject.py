@@ -4,6 +4,7 @@ import csv
 import os
 import requests
 
+
 def processdata():
     csv_path = "C:/Users/Bonn/Desktop/1.csv"
     with open(csv_path) as f:
@@ -11,12 +12,12 @@ def processdata():
         n = 1
         for each_row in reader:
             each_row[1] = findurl(each_row[1])
-            print("Downloading the " + str(n) + "th video, link is "+ each_row[1] + "...")
+            print("Downloading the " + str(n) + "th video, link is " + each_row[1] + "...")
             download(each_row[1], each_row[0][-19:])
             print("finished the " + str(n) + "th video")
-            n+=1
+            n += 1
     f.close()
-    #
+
 
 def download(url, name):
     path = "C:/Users/Bonn/Desktop/videos/" + name + ".mp4"
@@ -24,6 +25,7 @@ def download(url, name):
     with open(path, 'wb') as f:
         f.write(r.content)
         f.close
+
 
 # convert string to number, like "2.3w" -> 23000 and "2.3亿" to 230000000
 def strToNum(s):
