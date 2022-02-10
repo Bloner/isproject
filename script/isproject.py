@@ -12,16 +12,20 @@ def processdata():
         n = 1
         for each_row in reader:
             each_row[1] = findurl(each_row[1])
-            print("Downloading the " + str(n) + "th video, link is " + each_row[1] + "...")
+            print("Downloading the " + str(n) + "th video, the link is " + each_row[1] + "...")
             download(each_row[1], each_row[0][-19:])
-            print("finished the " + str(n) + "th video")
+            print("The " + str(n) + "th video has been downloaded successfully!")
             n += 1
     f.close()
 
 
 def download(url, name):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'}
     path = "C:/Users/Bonn/Desktop/videos/" + name + ".mp4"
-    r = requests.get("https:" + url)
+    time.sleep(random.randomint(20, 30))
+    print("what happends?")
+    r = requests.get("https" + url, headers=header)
     with open(path, 'wb') as f:
         f.write(r.content)
         f.close
